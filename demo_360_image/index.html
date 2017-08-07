@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BelzbergArchitects VR Demo</title>
+    <script src="./js/aframe-master.min.js"></script>
+    <script src="./js/set-image.js"></script>
+
+    <!--fixme-->
+    <script src="https://npmcdn.com/aframe-animation-component@3.0.1"></script>
+    <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
+    <script src="https://npmcdn.com/aframe-layout-component@3.0.1"></script>
+    <script src="https://npmcdn.com/aframe-template-component@3.1.1"></script>
+</head>
+<body>
+<a-scene>
+    <a-assets>
+        <img id="office" crossorigin="anonymous" src="./assets/office.jpeg">
+        <img id="fishbowl" crossorigin="anonymous" src="./assets/fishbowl.jpeg">
+        <img id="perch" crossorigin="anonymous" src="./assets/perch.jpeg">
+        <img id="cave" crossorigin="anonymous" src="./assets/cave.jpeg">
+
+        <script id="link" type="text/html">
+            <a-entity class="link"
+                      geometry="primitive: circle; radius: 0.3;"
+                      material="shader: flat;color:#eeeeee;"
+                      text="value:${text};width:2.5;color:#222222;align: center"
+                      event-set__1="_event: mousedown; scale: 1 1 1"
+                      event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+                      event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                      event-set__4="_event: mouseleave; scale: 1 1 1"
+                      set-image="on: click; target: #image-360; src: ${src}">
+            </a-entity>
+        </script>
+    </a-assets>
+
+    <a-sky id="image-360" src="#office"></a-sky>
+    <a-text font="kelsonsans" value="" width="4" position="-2.5 0.25 -1.5" rotation="0 15 0"></a-text>
+
+
+    <a-entity id="links" layout="type: line; margin:1" position="-1  -1 -4">
+        <a-entity template="src: #link" data-src="#cave" data-text="cave"></a-entity>
+        <a-entity template="src: #link" data-src="#fishbowl" data-text="fishbowl"></a-entity>
+        <a-entity template="src: #link" data-src="#office" data-text="office"></a-entity>
+        <a-entity template="src: #link" data-src="#perch" data-text="perch"></a-entity>
+    </a-entity>
+
+    <a-entity camera look-controls>
+        <a-cursor id="cursor"
+                  animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+                  animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 150"
+                  event-set__1="_event: mouseenter; color: springgreen"
+                  event-set__2="_event: mouseleave; color: black"
+                  fuse="true"
+                  raycaster="objects: .link"></a-cursor>
+    </a-entity>
+
+</a-scene>
+</body>
+
+</body>
+</html>
